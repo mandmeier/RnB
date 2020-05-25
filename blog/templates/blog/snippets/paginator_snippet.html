@@ -1,0 +1,23 @@
+{% load blog_extras %}
+
+{% if licks.has_other_pages %}
+<div class="paginator">
+    {% if licks.has_previous %}
+      <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' 1 %}"><span class="icon icon-angle-double-left"></span></a>
+      <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.previous_page_number %}"><span class="icon icon-chevron-left"></span></a>
+    {% endif %}
+
+    {% for num in licks.paginator.page_range %}
+      {% if licks.number == num %}
+        <a class = "paginator-btn btn btn-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% elif num > licks.number|add:'-4' and num < licks.number|add:'4'%}
+        <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' num %}">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if licks.has_next %}
+      <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.next_page_number %}"><span class="icon icon-chevron-right"></span></a>
+      <a class = "paginator-btn btn btn-outline-primary mb-4" href="?{% url_replace request 'page' licks.paginator.num_pages %}"><span class="icon icon-angle-double-right"></span></a>
+    {% endif %}
+</div>
+{% endif %}
